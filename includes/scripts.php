@@ -15,7 +15,7 @@
  */
 
 // Exit if accessed directly
-if( !defined( 'ABSPATH' ) ) exit;
+if( ! defined( 'ABSPATH' ) ) exit;
     /**
      * Load front end scripts.
      *
@@ -33,6 +33,6 @@ if( !defined( 'ABSPATH' ) ) exit;
     	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
         wp_enqueue_style( 'edd_resend_receipt_css', EDD_RESEND_RECEIPT_URL . '/assets/css/styles' . $suffix . '.css' );
-        wp_enqueue_script('ajax_submission', EDD_RESEND_RECEIPT_URL . '/assets/js/ajax_req' . $suffix . '.js', array("jquery"));
+        wp_enqueue_script( 'ajax_submission', EDD_RESEND_RECEIPT_URL . '/assets/js/ajax_req' . $suffix . '.js', array( 'jquery' ) );
     }
     add_action( 'wp_enqueue_scripts', 'edd_resend_receipt_scripts' );

@@ -17,9 +17,9 @@
 
 
 // Exit if accessed directly
-if( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
-if( !class_exists( 'EDD_Resend_Receipt' ) ) {
+if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
 
     /**
      * Main EDD_RESEND_RECEIPT class
@@ -34,7 +34,6 @@ if( !class_exists( 'EDD_Resend_Receipt' ) ) {
          */
         private static $instance;
 
-
         /**
          * Get active instance
          *
@@ -43,7 +42,7 @@ if( !class_exists( 'EDD_Resend_Receipt' ) ) {
          * @return      object self::$instance The one true EDD_Resend_Receipt
          */
         public static function instance() {
-            if( !self::$instance ) {
+            if ( ! self::$instance ) {
                 self::$instance = new EDD_Resend_Receipt();
                 self::$instance->setup_constants();
                 self::$instance->includes();
@@ -53,7 +52,6 @@ if( !class_exists( 'EDD_Resend_Receipt' ) ) {
 
             return self::$instance;
         }
-
 
         /**
          * Setup plugin constants
@@ -73,7 +71,6 @@ if( !class_exists( 'EDD_Resend_Receipt' ) ) {
             define( 'EDD_RESEND_RECEIPT_URL', plugin_dir_url( __FILE__ ) );
         }
 
-
         /**
          * Include necessary files
          *
@@ -85,11 +82,11 @@ if( !class_exists( 'EDD_Resend_Receipt' ) ) {
             // Include required files
             require_once EDD_RESEND_RECEIPT_DIR . 'includes/scripts.php';
 			require_once EDD_RESEND_RECEIPT_DIR . 'includes/functions.php';
-            if( is_admin() ) {
+
+            if ( is_admin() ) {
                 require_once EDD_RESEND_RECEIPT_DIR . 'includes/class-eddrr-meta-functions.php';
             }
         }
-
 
         /**
          * Run action and filter hooks
@@ -107,15 +104,14 @@ if( !class_exists( 'EDD_Resend_Receipt' ) ) {
             add_action( 'wp_ajax_edd_resend_receipt_on_post', 'edd_resend_receipt_on_post' );
 
             // Handle EDD licensing
-            if( class_exists( 'EDD_License' ) ) {
+            if ( class_exists( 'EDD_License' ) ) {
 				$license = new EDD_License( __FILE__, 'Resend Receipt', EDD_RESEND_RECEIPT_VER, 'DevriX' );
             }
 
-            if( class_exists( 'EDDRR_Meta_Functions' ) ) {
+            if ( class_exists( 'EDDRR_Meta_Functions' ) ) {
                 $license = new EDDRR_Meta_Functions();
             }
         }
-
 
         /**
          * Internationalization
@@ -137,7 +133,7 @@ if( !class_exists( 'EDD_Resend_Receipt' ) ) {
             $mofile_local   = $lang_dir . $mofile;
             $mofile_global  = WP_LANG_DIR . '/edd-resend-receipt/' . $mofile;
 
-            if( file_exists( $mofile_global ) ) {
+            if ( file_exists( $mofile_global ) ) {
                 // Look in global /wp-content/languages/edd-resend-receipt/ folder
                 load_textdomain( 'edd-resend-receipt', $mofile_global );
             } elseif( file_exists( $mofile_local ) ) {
@@ -148,7 +144,6 @@ if( !class_exists( 'EDD_Resend_Receipt' ) ) {
                 load_plugin_textdomain( 'edd-resend-receipt', false, $lang_dir );
             }
         }
-
 
         /**
          * Add settings
@@ -184,6 +179,7 @@ add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'edd_rr_plugin_a
 
 function edd_rr_plugin_action_links( $links ) {
    $links[] = '<a href="'. esc_url( get_admin_url(null, 'edit.php?post_type=download&page=edd-settings&tab=extensions') ) .'">Settings</a>';
+
    return $links;
 }
 
@@ -195,8 +191,8 @@ function edd_rr_plugin_action_links( $links ) {
  * @return      \EDD_RESEND_RECEIPT The one true EDD_RESEND_RECEIPT
  */
 function edd_resend_receipt_load() {
-    if( ! class_exists( 'Easy_Digital_Downloads' ) ) {
-        if( ! class_exists( 'EDD_Extension_Activation' ) ) {
+    if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
+        if ( ! class_exists( 'EDD_Extension_Activation' ) ) {
             require_once 'includes/class-extension-activation.php';
         }
 

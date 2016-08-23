@@ -16,8 +16,7 @@
  * @copyright	Copyright (c) DevriX <mpeshev@devrix.com>
  */
 // Exit if accessed directly
-if( !defined( 'ABSPATH' ) ) exit;
-
+if( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Check if the user enabled resend receipt option.
@@ -37,7 +36,6 @@ function edd_resend_receipt_admin_enabled() {
 
 }
 
-
 /**
  * Get downloads list.
  *
@@ -50,6 +48,7 @@ function edd_resend_receipt_admin_enabled() {
 function edd_get_resend_disabled_downloads() {
 
 	$downloads = array();
+
 	$args = array(
 		'post_type' 	=> 'download',
 		'post_status'	=> 'publish',
@@ -66,7 +65,6 @@ function edd_get_resend_disabled_downloads() {
 	// Return the download posts array
 	return $downloads;
 }
-
 
 /**
  * Receipt Resend Form.
@@ -114,13 +112,12 @@ function edd_resend_receipt_form( $atts = false ) {
 				</form>
 				<div id="eddrr_response_div">';
 		// Incase if form submitted normally without jQuery
-		if( isset( $_POST['edd_resend_value'] ) ) {
+		if ( isset( $_POST['edd_resend_value'] ) ) {
 			echo edd_resend_receipt_on_post();
 		}
 		echo '</div>';
 		return ob_get_clean();
 }
-
 
 /**
  * Process Resend Request.
@@ -144,9 +141,7 @@ function edd_resend_receipt_on_post(){
 		
 		_e( 'Cheatin&#8217; huh?', 'edd-resend-receipt' );
 		exit;
-	}
-
-	else if( isset( $_POST['edd_resend_value'] ) && isset( $_POST['edd_resend_key'] ) ) {
+	} else if ( isset( $_POST['edd_resend_value'] ) && isset( $_POST['edd_resend_key'] ) ) {
 			
 		$edd_resend_value = $_POST['edd_resend_value'];
 		$edd_resend_key = $_POST['edd_resend_key'];
@@ -172,7 +167,6 @@ function edd_resend_receipt_on_post(){
 	echo $output; 
 	wp_die(); // Do not remove this
 }
-
 
 /**
  * Payment ID is given by the user.
@@ -260,7 +254,7 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 	
 	foreach ( $download_ids as $key ) {
 		if ( in_array( $key, $disabled ) ) {
-			$disabled_count ++;
+			$disabled_count++;
 		}
 	}
 	
@@ -268,7 +262,6 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 	$status = ( $purchased_count == 0 ) ? 'no_purchase' : 'purchased';
 	return ( $disabled_count <= $purchased_count ) ? $status : false;
 }
-
 
 /**
  * Resending the Receipts.
@@ -290,7 +283,7 @@ function edd_resend_receipt_again( $payment_id ) {
 	
 	if ( edd_resend_receipt_download_enabled( $payment_id ) ) {
 		
-		if ( edd_resend_receipt_download_enabled( $payment_id ) == 'purchased' ) {
+		if ( 'purchased' == edd_resend_receipt_download_enabled( $payment_id ) ) {
 			$admin_notice = edd_resend_receipt_admin_enabled();
 			$output = edd_resend_receipt_language( 'error_sending', 'error' );
 			edd_email_purchase_receipt( $payment_id, $admin_notice );

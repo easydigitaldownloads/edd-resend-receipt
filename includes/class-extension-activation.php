@@ -6,10 +6,8 @@
  * @since       1.0.0
  */
 
-
 // Exit if accessed directly
-if( !defined( 'ABSPATH' ) ) exit;
-
+if( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * EDD Extension Activation Handler Class
@@ -41,22 +39,21 @@ class EDD_Extension_Activation {
         $this->plugin_file = $plugin_file;
 
         // Set plugin name
-        if( isset( $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] ) ) {
+        if ( isset( $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] ) ) {
             $this->plugin_name = str_replace( 'Easy Digital Downloads - ', '', $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] );
         } else {
             $this->plugin_name = __( 'This plugin', 'edd' );
         }
 
         // Is EDD installed?
-        foreach( $plugins as $plugin_path => $plugin ) {
-            if( $plugin['Name'] == 'Easy Digital Downloads' ) {
+        foreach ( $plugins as $plugin_path => $plugin ) {
+            if ( 'Easy Digital Downloads' == $plugin['Name'] ) {
                 $this->has_edd = true;
                 $this->edd_base = $plugin_path;
                 break;
             }
         }
     }
-
 
     /**
      * Process plugin deactivation
@@ -70,7 +67,6 @@ class EDD_Extension_Activation {
         add_action( 'admin_notices', array( $this, 'missing_edd_notice' ) );
     }
 
-
     /**
      * Display notice if EDD isn't installed
      *
@@ -79,7 +75,7 @@ class EDD_Extension_Activation {
      * @return      string The notice to display
      */
     public function missing_edd_notice() {
-        if( $this->has_edd ) {
+        if ( $this->has_edd ) {
             $url  = esc_url( wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . $this->edd_base ), 'activate-plugin_' . $this->edd_base ) );
             $link = '<a href="' . $url . '">' . __( 'activate it', 'edd-extension-activation' ) . '</a>';
         } else {

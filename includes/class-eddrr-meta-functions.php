@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'WPINC' ) ) {
-  die("Nice try. But this ain't gonna work. Seriously dude.!");
+  die( 'Nice try. But this ain\'t gonna work. Seriously dude.!' );
 }
 /**
  * Custom meta box class for EDD Resend Receipt
@@ -32,7 +32,6 @@ class EDDRR_Meta_Functions {
 		add_action( 'save_post', array( $this, 'save_settings' ) );
 	}
 
-
 	/**
 	 * Create meta box for resend receipt.
 	 *
@@ -54,7 +53,6 @@ class EDDRR_Meta_Functions {
 		);
 	}
 	
-
 	/**
 	 * Resend Recipt meta box content.
 	 *
@@ -78,7 +76,6 @@ class EDDRR_Meta_Functions {
 		</label>
 		<?php
 	}
-
 
 	/**
 	 * Save meta box settings.
