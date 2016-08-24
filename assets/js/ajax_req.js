@@ -33,9 +33,6 @@ jQuery(document).ready(function($) {
 		var pholder;		
 		if( ph == "purchase_key" ){
 			pholder = "Purchase Key";
-		}		
-		if( ph == "payment_id" ){
-			pholder = "Payment ID";
 		}
 		if( ph == "license_key" ){
 			pholder = "License Key";
