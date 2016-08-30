@@ -142,24 +142,29 @@ function edd_resend_receipt_on_post(){
 		_e( 'Cheatin&#8217; huh?', 'edd-resend-receipt' );
 		exit;
 	} else if ( isset( $_POST['edd_resend_value'] ) && isset( $_POST['edd_resend_key'] ) ) {
-			
-		$edd_resend_value = $_POST['edd_resend_value'];
-		$edd_resend_key = $_POST['edd_resend_key'];
 
-		switch ( $edd_resend_key ) {
-				
-			case 'purchase_key':
-				$output = edd_resend_receipt_purchase_key( $edd_resend_value );
-				break;
+		if ( ! isset( $_COOKIE['edd_resend_last_query'] ) ) {
+			$edd_resend_value = $_POST['edd_resend_value'];
+			$edd_resend_key = $_POST['edd_resend_key'];
 
-			case 'payment_id':
-				$output = edd_resend_receipt_payment_id( $edd_resend_value );
-				break;
-				
-			default:
-				$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
-				break;
-		}	
+			switch ( $edd_resend_key ) {
+				case 'purchase_key':
+					$output = edd_resend_receipt_purchase_key( $edd_resend_value );
+					break;
+
+				case 'payment_id':
+					$output = edd_resend_receipt_payment_id( $edd_resend_value );
+					break;
+					
+				default:
+					$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
+					break;
+			}
+
+			setcookie( 'edd_resend_last_query', md5(0), time() + 15 );
+		} else {
+			$output = edd_resend_receipt_language( 'receipt_query_wait', 'error' );
+		}
 	} else {	
 		$output = edd_resend_receipt_language( 'invalid_data', 'error' );
 	}
@@ -345,6 +350,10 @@ function edd_resend_receipt_language( $text, $type ) {
 		case 'success_receipt':
 			
 			$response = __( 'Success. Your purchase receipt has been re-sent to you!', 'edd-resend-receipt' );
+			break;
+
+		case 'receipt_query_wait':
+			$response = __( 'Sorry, but you have to wait 15 seconds before send another query!', 'edd-resend-receipt' );
 			break;
 		
 		default:
