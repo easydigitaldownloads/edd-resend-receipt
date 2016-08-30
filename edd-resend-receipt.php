@@ -15,7 +15,6 @@
  *
  */
 
-
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -100,6 +99,7 @@ if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
             add_filter( 'edd_settings_extensions', array( $this, 'settings' ), 1 );
 
             add_shortcode( 'edd_resend_form', 'edd_resend_receipt_form' );
+            
             add_action( 'wp_ajax_nopriv_edd_resend_receipt_on_post', 'edd_resend_receipt_on_post' );
             add_action( 'wp_ajax_edd_resend_receipt_on_post', 'edd_resend_receipt_on_post' );
 
@@ -170,6 +170,7 @@ if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
                     'type'  => 'checkbox',
                 )
             );
+
             return array_merge( $settings, $new_settings );
         }
     }
@@ -178,7 +179,7 @@ if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
 add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'edd_rr_plugin_action_links' );
 
 function edd_rr_plugin_action_links( $links ) {
-   $links[] = '<a href="'. esc_url( get_admin_url(null, 'edit.php?post_type=download&page=edd-settings&tab=extensions') ) .'">Settings</a>';
+   $links[] = '<a href="'. esc_url( get_admin_url( null, 'edit.php?post_type=download&page=edd-settings&tab=extensions' ) ) .'">Settings</a>';
 
    return $links;
 }
@@ -198,13 +199,13 @@ function edd_resend_receipt_load() {
 
         $activation = new EDD_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
         $activation = $activation->run();
+
         return EDD_RESEND_RECEIPT::instance();
     } else {
         return EDD_RESEND_RECEIPT::instance();
     }
 }
 add_action( 'plugins_loaded', 'edd_resend_receipt_load' );
-
 
 /**
  * The activation hook is called outside of the singleton because WordPress doesn't

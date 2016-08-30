@@ -15,6 +15,7 @@
  * @author		DevriX
  * @copyright	Copyright (c) DevriX <mpeshev@devrix.com>
  */
+
 // Exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) exit;
 
@@ -111,11 +112,14 @@ function edd_resend_receipt_form( $atts = false ) {
 				<input type="submit" class="edd-submit eddrr-form" name="eddrr_submit" id="edd_resend_button" value="Resend Receipt"><br/>
 				</form>
 				<div id="eddrr_response_div">';
+
 		// Incase if form submitted normally without jQuery
 		if ( isset( $_POST['edd_resend_value'] ) ) {
 			echo edd_resend_receipt_on_post();
 		}
+
 		echo '</div>';
+
 		return ob_get_clean();
 }
 
@@ -189,13 +193,13 @@ function edd_resend_receipt_payment_id( $payment_id ){
 
 	$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
 	$meta = get_post_meta( $payment_id, '_edd_payment_meta', true );
+
 	if ( isset( $meta ) && is_array( $meta ) && ! empty( $meta['key'] ) ) {
 		$output = edd_resend_receipt_again( $payment_id );
 	}
 	
 	return $output;
 }
-
 
 /**
  * Purchase Key is given by the user.
@@ -215,7 +219,7 @@ function edd_resend_receipt_purchase_key( $purchase_key ){
 
 	$payments_id = edd_get_purchase_id_by_key( $purchase_key );
 
-	if( $payments_id ) {
+	if ( $payments_id ) {
 		$output = edd_resend_receipt_again( $payments_id );
 	}
 
@@ -244,6 +248,7 @@ function edd_resend_receipt_purchase_key( $purchase_key ){
 function edd_resend_receipt_download_enabled( $payment_id ) {
 
 	$disabled_count = 0;
+
 	// Get the disabled downloads list
 	$disabled_downloads = edd_get_resend_disabled_downloads();
 	$disabled = array();
@@ -265,6 +270,7 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 	
 	$purchased_count = sizeof( $download_ids );
 	$status = ( $purchased_count == 0 ) ? 'no_purchase' : 'purchased';
+
 	return ( $disabled_count <= $purchased_count ) ? $status : false;
 }
 
@@ -363,5 +369,6 @@ function edd_resend_receipt_language( $text, $type ) {
 
 	// Result div
 	$output = '<div class="'.$class.'"><p>'.$response.'</p></div>';
+	
 	return $output;
 }
