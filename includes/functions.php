@@ -102,6 +102,7 @@ function edd_resend_receipt_form( $atts = false ) {
 		echo '<input name="edd_resend_ajax" id="edd_resend_ajax" type="hidden" value="'.home_url().'/wp-admin/admin-ajax.php"/>';
 		echo '<select name="edd_resend_key" id="edd_resend_key" class="eddrr-form eddrr-form-key">';
 		echo '<option value="purchase_key">Purchase Key</option>';
+		echo '<option value="payment_id">Payment ID</option>';
 		echo '<option value="license_key">License Key</option>';
 		echo '</select>';
 		// @TODO: This should be updated in the future version, I don't like the markup here
@@ -125,7 +126,7 @@ function edd_resend_receipt_form( $atts = false ) {
  * If post data us available we will start this function after
  * verifying WordPress nonce field.
  *
- * @var		$edd_resend_key -  Whether purchase_key or license_key
+ * @var		$edd_resend_key -  Whether payment_id, purchase_key or license_key
  * @var		$edd_resend_value - Value for aove said key
  * @var		$response_array	- 	Response message array to be shown
  *
@@ -150,6 +151,10 @@ function edd_resend_receipt_on_post(){
 			case 'purchase_key':
 				$output = edd_resend_receipt_purchase_key( $edd_resend_value );
 				break;
+
+			case 'payment_id':
+				$output = edd_resend_receipt_payment_id( $edd_resend_value );
+				break;
 				
 			default:
 				$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
@@ -162,6 +167,30 @@ function edd_resend_receipt_on_post(){
 	echo $output; 
 	wp_die(); // Do not remove this
 }
+
+/**
+ * Payment ID is given by the user.
+ *
+ * This function is called if the user selected payment id as
+ * key and entered the value.
+ *
+ * @var			$payment_id -  The payement id entered by the user.
+ * @var			$result	- 	Response message array to be shown
+ *
+ * @since		1.0.0
+ * @return		$result		The response content to be shown to user
+ */	
+function edd_resend_receipt_payment_id( $payment_id ){
+
+	$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
+	$meta = get_post_meta( $payment_id, '_edd_payment_meta', true );
+	if ( isset( $meta ) && is_array( $meta ) && ! empty( $meta['key'] ) ) {
+		$output = edd_resend_receipt_again( $payment_id );
+	}
+	
+	return $output;
+}
+
 
 /**
  * Purchase Key is given by the user.
