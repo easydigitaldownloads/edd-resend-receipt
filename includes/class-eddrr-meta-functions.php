@@ -46,7 +46,7 @@ class EDDRR_Meta_Functions {
 	public function edd_resend_receipt_meta() {	
 		add_meta_box( 
 			'eddda_meta_box', 
-			__( 'Resend Receipt Settingss', 'edd-resend-receipt' ), 
+			__( 'Resend Receipt Settings', 'edd-resend-receipt' ), 
 			array( $this, 'edd_resend_receipt_meta_output' ), 
 			'download', 
 			'side' 
