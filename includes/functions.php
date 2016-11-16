@@ -80,6 +80,7 @@ function edd_get_resend_disabled_downloads() {
  * @return		void
  */
 function edd_resend_receipt_form( $atts = false ) {
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	
 	// Initilize the attributes
 	$class = '';
@@ -104,7 +105,13 @@ function edd_resend_receipt_form( $atts = false ) {
 		echo '<select name="edd_resend_key" id="edd_resend_key" class="eddrr-form eddrr-form-key">';
 		echo '<option value="purchase_key">Purchase Key</option>';
 		echo '<option value="payment_id">Payment ID</option>';
-		echo '<option value="license_key">License Key</option>';
+
+	    // Active EDD Software Licensing integration
+
+		if ( is_plugin_active( 'edd-software-licensing/edd-software-licenses.php' ) ) {
+			echo '<option value="license_key">License Key</option>';
+		}
+
 		echo '</select>';
 		// @TODO: This should be updated in the future version, I don't like the markup here
 		// Form input area for email of the customer
