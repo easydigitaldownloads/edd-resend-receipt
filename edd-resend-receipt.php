@@ -3,7 +3,7 @@
  * Plugin Name:     Easy Digital Downloads - Resend Receipt
  * Plugin URI:      http://www.devrix.com/
  * Description:     EDD Resend Receipt allows your customers to resend their purchase receipts directly from your website without logging into their account.
- * Version:         1.0.2
+ * Version:         1.0.0
  * Author:          DevriX
  * Author URI:      http://www.devrix.com/
  * Text Domain:     edd-resend-receipt
