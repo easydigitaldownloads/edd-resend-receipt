@@ -80,6 +80,14 @@ function edd_get_resend_disabled_downloads() {
  * @return		void
  */
 function edd_resend_receipt_form( $atts = false ) {
+	global $post;
+	if( empty( $post ) && empty( $post->ID ) ){
+		return;		
+	}
+	$eddrr_enabled = (int)get_post_meta( $post->ID, 'eddrr_enabled', true );
+	if( empty( $eddrr_enabled ) ){// not show form if disabled
+		return;
+	}
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	
 	// Initilize the attributes
