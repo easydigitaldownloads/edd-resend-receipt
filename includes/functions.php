@@ -240,8 +240,8 @@ function edd_resend_receipt_purchase_key( $purchase_key ){
  * This function is used to check if the items in the requested purchase
  * receipt is disabled to resend the recipt. Enable/Disable can be done
  * in the download edit screen.
- * If the purchase contains multiples files, entire purchase receipt will be resent
- * even if one or more items disabled resending receipt.
+ * If the purchase contains multiple products, the entire purchase receipt will be
+ * resent if at least one of the products has enabled resending.
  *
  * @var			$payment_id - The payment id for the current purchase
  * @var			$disabled_count - Count of the items disabled in the current urchase
@@ -279,7 +279,11 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 	$purchased_count = sizeof( $download_ids );
 	$status = ( $purchased_count == 0 ) ? 'no_purchase' : 'purchased';
 
-	return ( $disabled_count <= $purchased_count ) ? $status : false;
+	if ( $disabled_count < $purchased_count ) {
+		return $status;
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -353,7 +357,7 @@ function edd_resend_receipt_language( $text, $type ) {
 
 		case 'receipt_disabled':
 
-			$response = __( 'Sorry, but manual receipt resend is disabled for that product. Kindly contact the admin!', 'edd-resend-receipt' );
+			$response = __( 'Sorry, but manual receipt resend is disabled for that purchase. Kindly contact the admin!', 'edd-resend-receipt' );
 			break;
 
 		case 'error_sending':
