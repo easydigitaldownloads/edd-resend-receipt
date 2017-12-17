@@ -279,11 +279,7 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 	$purchased_count = sizeof( $download_ids );
 	$status = ( $purchased_count == 0 ) ? 'no_purchase' : 'purchased';
 
-	if ( $disabled_count < $purchased_count ) {
-		return $status;
-	} else {
-		return false;
-	}
+	return ( $disabled_count < $purchased_count ) ? $status : false;
 }
 
 /**
