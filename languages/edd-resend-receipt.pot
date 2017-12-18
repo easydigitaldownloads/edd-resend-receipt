@@ -1,0 +1,156 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Easy Digital Downloads - Resend Receipt\n"
+"POT-Creation-Date: 2017-12-18 12:26-0800\n"
+"PO-Revision-Date: 2017-12-18 12:25-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: edd-resend-receipt.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: edd-resend-receipt.php:157 includes/class-eddrr-meta-functions.php:49
+msgid "Resend Receipt Settings"
+msgstr ""
+
+#: edd-resend-receipt.php:158
+msgid "Configure Resend Receipt Settings"
+msgstr ""
+
+#: edd-resend-receipt.php:165
+msgid "Enable Admin Notification"
+msgstr ""
+
+#: edd-resend-receipt.php:166
+msgid ""
+"Check this box if you want admin to receive an email notification whenever "
+"someone resend their receipts."
+msgstr ""
+
+#: edd-resend-receipt.php:179
+msgid "Settings"
+msgstr ""
+
+#: includes/class-eddrr-meta-functions.php:72
+msgid "Enable"
+msgstr ""
+
+#: includes/class-eddrr-meta-functions.php:73
+msgid "Disable"
+msgstr ""
+
+#: includes/class-eddrr-meta-functions.php:75
+msgid "Enable receipt resend"
+msgstr ""
+
+#: includes/class-extension-activation.php:45
+msgid "This plugin"
+msgstr ""
+
+#: includes/class-extension-activation.php:80
+msgid "activate it"
+msgstr ""
+
+#: includes/class-extension-activation.php:83
+msgid "install it"
+msgstr ""
+
+#: includes/class-extension-activation.php:86
+#, php-format
+msgid " requires Easy Digital Downloads! Please %s to continue!"
+msgstr ""
+
+#: includes/functions.php:107 includes/scripts.php:41
+msgid "Purchase Key"
+msgstr ""
+
+#: includes/functions.php:108 includes/scripts.php:42
+msgid "Payment ID"
+msgstr ""
+
+#: includes/functions.php:113 includes/scripts.php:43
+msgid "License Key"
+msgstr ""
+
+#: includes/functions.php:154
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: includes/functions.php:341
+msgid "Sorry, but no purchase details found!"
+msgstr ""
+
+#: includes/functions.php:346
+msgid "Sorry, but you have entered invalid data!"
+msgstr ""
+
+#: includes/functions.php:351
+msgid "No valid purchase found for this license key"
+msgstr ""
+
+#: includes/functions.php:356
+msgid ""
+"Sorry, but manual receipt resend is disabled for that purchase. Kindly "
+"contact the admin!"
+msgstr ""
+
+#: includes/functions.php:361
+msgid "Error while sending receipt. Please Try again"
+msgstr ""
+
+#: includes/functions.php:366
+msgid "Success. Your purchase receipt has been re-sent to you!"
+msgstr ""
+
+#: includes/functions.php:370
+msgid "Sorry, but you have to wait 15 seconds before send another query!"
+msgstr ""
+
+#: includes/functions.php:374
+msgid "Oops! Un-expected error!"
+msgstr ""
+
+#: includes/scripts.php:44
+msgid "Enter a "
+msgstr ""
+
+#: includes/scripts.php:45
+msgid "Please wait..."
+msgstr ""
+
+#: includes/scripts.php:46
+msgid "Please enter a value."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Easy Digital Downloads - Resend Receipt"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://easydigitaldownloads.com/downloads/resend-receipt/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Resend Receipt allows your customers to resend their purchase receipts "
+"directly from your website without logging into their account."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Easy Digital Downloads"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://easydigitaldownloads.com"
+msgstr ""
