@@ -36,10 +36,14 @@ function edd_resend_receipt_scripts( $hook ) {
 	wp_enqueue_style( 'edd_resend_receipt_css', EDD_RESEND_RECEIPT_URL . '/assets/css/styles' . $suffix . '.css' );
 	wp_enqueue_script( 'ajax_submission', EDD_RESEND_RECEIPT_URL . '/assets/js/ajax_req' . $suffix . '.js', array( 'jquery' ) );
 
-	// Localize the script with new data
+	// localize JS strings
 	$js_translations = array(
-		'please_wait' => __( 'Please wait...', 'edd-resend-receipt' ),
-		'enter_value' => __( 'Please enter a value.', 'edd-resend-receipt' ),
+		'purchase_key'  => __( 'Purchase Key', 'edd-resend-receipt' ),
+		'payment_id'    => __( 'Payment ID', 'edd-resend-receipt' ),
+		'license_key'   => __( 'License Key', 'edd-resend-receipt' ),
+		'field_pholder' => __( 'Enter a ', 'edd-resend-receipt' ),
+		'please_wait'   => __( 'Please wait...', 'edd-resend-receipt' ),
+		'enter_value'   => __( 'Please enter a value.', 'edd-resend-receipt' ),
 	);
 	wp_localize_script( 'ajax_submission', 'eddrr_string_vars', $js_translations );
 }
