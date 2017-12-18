@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name:     Easy Digital Downloads - Resend Receipt
- * Plugin URI:      http://www.devrix.com/
- * Description:     EDD Resend Receipt allows your customers to resend their purchase receipts directly from your website without logging into their account.
- * Version:         1.0.0
- * Author:          DevriX
- * Author URI:      http://www.devrix.com/
+ * Plugin URI:      https://easydigitaldownloads.com/downloads/resend-receipt/
+ * Description:     Resend Receipt allows your customers to resend their purchase receipts directly from your website without logging into their account.
+ * Version:         1.0.1
+ * Author:          Easy Digital Downloads
+ * Author URI:      https://easydigitaldownloads.com
  * Text Domain:     edd-resend-receipt
  * EDD Version:     2.2.4
  *
@@ -99,7 +99,7 @@ if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
             add_filter( 'edd_settings_extensions', array( $this, 'settings' ), 1 );
 
             add_shortcode( 'edd_resend_form', 'edd_resend_receipt_form' );
-            
+
             add_action( 'wp_ajax_nopriv_edd_resend_receipt_on_post', 'edd_resend_receipt_on_post' );
             add_action( 'wp_ajax_edd_resend_receipt_on_post', 'edd_resend_receipt_on_post' );
 
