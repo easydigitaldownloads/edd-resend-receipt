@@ -56,13 +56,13 @@ function edd_get_resend_disabled_downloads() {
 		'meta_query' 	=> array(
 			array(
 				'key' 	=> 'eddrr_enabled',
-				'value'	=> 0 
+				'value'	=> 0
 			)
 		)
 	);
-	
+
 	$downloads = get_posts( $args );
-	
+
 	// Return the download posts array
 	return $downloads;
 }
@@ -80,35 +80,28 @@ function edd_get_resend_disabled_downloads() {
  * @return		void
  */
 function edd_resend_receipt_form( $atts = false ) {
-	global $post;
-	if( empty( $post ) && empty( $post->ID ) ){
-		return;		
-	}
-	$eddrr_enabled = (int)get_post_meta( $post->ID, 'eddrr_enabled', true );
-	if( empty( $eddrr_enabled ) ){// not show form if disabled
-		return;
-	}
+
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	
+
 	// Initilize the attributes
 	$class = '';
-	
+
 	// Take optional attributes from shortcode
 	if ( ! empty( $atts ) ) {
 		if ( array_key_exists( 'class', $atts ) ) {
 			$class = $atts['class'];
 		}
 	}
-	
+
 	/*************************** Starts html form ************************************/ ?>
-	
+
 	<div class="edd-resend-div <?php echo $class; ?>">
 		<?php
 		ob_start();
 		echo '<form action="'.$_SERVER['REQUEST_URI'].'" method="post" id="eddrr-form">';
 		// WordPress nonce field for security purpose
 		wp_nonce_field( 'edd_rr_action', 'edd_rr_nonce' );
-		
+
 		echo '<input name="edd_resend_ajax" id="edd_resend_ajax" type="hidden" value="'.home_url().'/wp-admin/admin-ajax.php"/>';
 		echo '<select name="edd_resend_key" id="edd_resend_key" class="eddrr-form eddrr-form-key">';
 		echo '<option value="purchase_key">Purchase Key</option>';
@@ -151,13 +144,13 @@ function edd_resend_receipt_form( $atts = false ) {
  *
  * @since		1.0.0
  * @return		$output		The response content to be shown to user
- */	
+ */
 function edd_resend_receipt_on_post(){
-	
+
 	$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
-	
+
 	if ( ! isset( $_POST['edd_rr_nonce'] ) || ! wp_verify_nonce( $_POST['edd_rr_nonce'], 'edd_rr_action' ) ) {
-		
+
 		_e( 'Cheatin&#8217; huh?', 'edd-resend-receipt' );
 		exit;
 	} else if ( isset( $_POST['edd_resend_value'] ) && isset( $_POST['edd_resend_key'] ) ) {
@@ -174,7 +167,7 @@ function edd_resend_receipt_on_post(){
 				case 'payment_id':
 					$output = edd_resend_receipt_payment_id( $edd_resend_value );
 					break;
-					
+
 				default:
 					$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
 					break;
@@ -184,11 +177,11 @@ function edd_resend_receipt_on_post(){
 		} else {
 			$output = edd_resend_receipt_language( 'receipt_query_wait', 'error' );
 		}
-	} else {	
+	} else {
 		$output = edd_resend_receipt_language( 'invalid_data', 'error' );
 	}
 
-	echo $output; 
+	echo $output;
 	wp_die(); // Do not remove this
 }
 
@@ -203,7 +196,7 @@ function edd_resend_receipt_on_post(){
  *
  * @since		1.0.0
  * @return		$result		The response content to be shown to user
- */	
+ */
 function edd_resend_receipt_payment_id( $payment_id ){
 
 	$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
@@ -212,7 +205,7 @@ function edd_resend_receipt_payment_id( $payment_id ){
 	if ( isset( $meta ) && is_array( $meta ) && ! empty( $meta['key'] ) ) {
 		$output = edd_resend_receipt_again( $payment_id );
 	}
-	
+
 	return $output;
 }
 
@@ -227,7 +220,7 @@ function edd_resend_receipt_payment_id( $payment_id ){
  *
  * @since		1.0.0
  * @return		$result		The response content to be shown to user
- */	
+ */
 function edd_resend_receipt_purchase_key( $purchase_key ){
 
 	$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
@@ -247,8 +240,8 @@ function edd_resend_receipt_purchase_key( $purchase_key ){
  * This function is used to check if the items in the requested purchase
  * receipt is disabled to resend the recipt. Enable/Disable can be done
  * in the download edit screen.
- * If the purchase contains multiples files, entire purchase receipt will be resent
- * even if one or more items disabled resending receipt.
+ * If the purchase contains multiple products, the entire purchase receipt will be
+ * resent if at least one of the products has enabled resending.
  *
  * @var			$payment_id - The payment id for the current purchase
  * @var			$disabled_count - Count of the items disabled in the current urchase
@@ -270,23 +263,23 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 	foreach ( $disabled_downloads as $e_download ) {
 		$disabled[] = $e_download->ID; // Make an array of disabled downloads
 	}
-	
+
 	$meta = get_post_meta( $payment_id, '_edd_payment_meta', true );
 	$download_ids = array();
 	foreach ( $meta['downloads'] as $current_download ) {
 		$download_ids[] = $current_download['id']; // Make an array of current payment's download items ids
 	}
-	
+
 	foreach ( $download_ids as $key ) {
 		if ( in_array( $key, $disabled ) ) {
 			$disabled_count++;
 		}
 	}
-	
+
 	$purchased_count = sizeof( $download_ids );
 	$status = ( $purchased_count == 0 ) ? 'no_purchase' : 'purchased';
 
-	return ( $disabled_count <= $purchased_count ) ? $status : false;
+	return ( $disabled_count < $purchased_count ) ? $status : false;
 }
 
 /**
@@ -306,9 +299,9 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 function edd_resend_receipt_again( $payment_id ) {
 
 	$output = edd_resend_receipt_language( 'receipt_disabled', 'error' );
-	
+
 	if ( edd_resend_receipt_download_enabled( $payment_id ) ) {
-		
+
 		if ( 'purchased' == edd_resend_receipt_download_enabled( $payment_id ) ) {
 			$admin_notice = edd_resend_receipt_admin_enabled();
 			$output = edd_resend_receipt_language( 'error_sending', 'error' );
@@ -318,7 +311,7 @@ function edd_resend_receipt_again( $payment_id ) {
 			$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
 		}
 	}
-	
+
 	return $output;
 }
 
@@ -340,43 +333,43 @@ function edd_resend_receipt_language( $text, $type ) {
 
 	$output = '';
 	$class = ( $type == 'success' ) ? 'eddrr-success' : 'eddrr-error';
-	
+
 	switch ( $text ) {
-		
+
 		case 'no_purchase_found':
-			
+
 			$response = __( 'Sorry, but no purchase details found!', 'edd-resend-receipt' );
 			break;
 
 		case 'invalid_data':
-			
+
 			$response = __( 'Sorry, but you have entered invalid data!', 'edd-resend-receipt' );
 			break;
 
 		case 'no_purchase_license':
-			
+
 			$response = __( 'No valid purchase found for this license key', 'edd-resend-receipt' );
 			break;
 
 		case 'receipt_disabled':
-			
-			$response = __( 'Sorry, but manual receipt resend is disabled for that product. Kindly contact the admin!', 'edd-resend-receipt' );
+
+			$response = __( 'Sorry, but manual receipt resend is disabled for that purchase. Kindly contact the admin!', 'edd-resend-receipt' );
 			break;
 
 		case 'error_sending':
-			
+
 			$response = __( 'Error while sending receipt. Please Try again', 'edd-resend-receipt' );
 			break;
 
 		case 'success_receipt':
-			
+
 			$response = __( 'Success. Your purchase receipt has been re-sent to you!', 'edd-resend-receipt' );
 			break;
 
 		case 'receipt_query_wait':
 			$response = __( 'Sorry, but you have to wait 15 seconds before send another query!', 'edd-resend-receipt' );
 			break;
-		
+
 		default:
 			$response = __( 'Oops! Un-expected error!', 'edd-resend-receipt' );
 			break;
@@ -384,6 +377,6 @@ function edd_resend_receipt_language( $text, $type ) {
 
 	// Result div
 	$output = '<div class="'.$class.'"><p>'.$response.'</p></div>';
-	
+
 	return $output;
 }
