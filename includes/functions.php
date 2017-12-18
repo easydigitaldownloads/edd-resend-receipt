@@ -104,13 +104,13 @@ function edd_resend_receipt_form( $atts = false ) {
 
 		echo '<input name="edd_resend_ajax" id="edd_resend_ajax" type="hidden" value="'.home_url().'/wp-admin/admin-ajax.php"/>';
 		echo '<select name="edd_resend_key" id="edd_resend_key" class="eddrr-form eddrr-form-key">';
-		echo '<option value="purchase_key">Purchase Key</option>';
-		echo '<option value="payment_id">Payment ID</option>';
+		echo '<option value="purchase_key">' . __( 'Purchase Key', 'edd-resend-receipt' ) . '</option>';
+		echo '<option value="payment_id">' . __( 'Payment ID', 'edd-resend-receipt' ) . '</option>';
 
 	    // Active EDD Software Licensing integration
 
 		if ( is_plugin_active( 'edd-software-licensing/edd-software-licenses.php' ) ) {
-			echo '<option value="license_key">License Key</option>';
+			echo '<option value="license_key">' . __( 'License Key', 'edd-resend-receipt' ) . '</option>';
 		}
 
 		echo '</select>';

@@ -176,7 +176,7 @@ if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
 add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'edd_rr_plugin_action_links' );
 
 function edd_rr_plugin_action_links( $links ) {
-   $links[] = '<a href="'. esc_url( get_admin_url( null, 'edit.php?post_type=download&page=edd-settings&tab=extensions' ) ) .'">Settings</a>';
+   $links[] = '<a href="'. esc_url( get_admin_url( null, 'edit.php?post_type=download&page=edd-settings&tab=extensions' ) ) .'">' . __( 'Settings', 'edd-resend-receipt' ) . '</a>';
 
    return $links;
 }
