@@ -10,9 +10,6 @@
  * EDD Version:     2.2.4
  *
  * @package         EDD\EDDResendReceipt
- * @author          DevriX
- * @copyright       Copyright (c) DevriX <mpeshev@devrix.com>
- *
  */
 
 // Exit if accessed directly
