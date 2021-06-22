@@ -102,7 +102,6 @@ function edd_resend_receipt_form( $atts = false ) {
 		// WordPress nonce field for security purpose
 		wp_nonce_field( 'edd_rr_action', 'edd_rr_nonce' );
 
-		echo '<input name="edd_resend_ajax" id="edd_resend_ajax" type="hidden" value="'.esc_url( admin_url( 'admin-ajax.php' ) ).'"/>';
 		echo '<select name="edd_resend_key" id="edd_resend_key" class="eddrr-form eddrr-form-key">';
 		echo '<option value="purchase_key">' . __( 'Purchase Key', 'edd-resend-receipt' ) . '</option>';
 		echo '<option value="payment_id">' . __( 'Payment ID', 'edd-resend-receipt' ) . '</option>';
