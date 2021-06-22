@@ -156,8 +156,8 @@ function edd_resend_receipt_on_post(){
 	} else if ( isset( $_POST['edd_resend_value'] ) && isset( $_POST['edd_resend_key'] ) ) {
 
 		if ( ! isset( $_COOKIE['edd_resend_last_query'] ) ) {
-			$edd_resend_value = $_POST['edd_resend_value'];
-			$edd_resend_key = $_POST['edd_resend_key'];
+			$edd_resend_value = sanitize_text_field( wp_unslash( $_POST['edd_resend_value'] ) );
+			$edd_resend_key = sanitize_text_field( wp_unslash( $_POST['edd_resend_key'] ) );
 
 			switch ( $edd_resend_key ) {
 				case 'purchase_key':
