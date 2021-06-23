@@ -93,11 +93,12 @@ function edd_resend_receipt_form( $atts = false ) {
 		}
 	}
 
+	ob_start();
+
 	/*************************** Starts html form ************************************/ ?>
 
 	<div class="edd-resend-div <?php echo $class; ?>">
 		<?php
-		ob_start();
 		echo '<form action="'.$_SERVER['REQUEST_URI'].'" method="post" id="eddrr-form">';
 		// WordPress nonce field for security purpose
 		wp_nonce_field( 'edd_rr_action', 'edd_rr_nonce' );
