@@ -34,7 +34,7 @@ function edd_resend_receipt_scripts( $hook ) {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 	wp_enqueue_style( 'edd_resend_receipt_css', EDD_RESEND_RECEIPT_URL . '/assets/css/styles' . $suffix . '.css' );
-	wp_enqueue_script( 'ajax_submission', EDD_RESEND_RECEIPT_URL . '/assets/js/ajax_req' . $suffix . '.js', array( 'jquery' ), '1.0.2', true );
+	wp_enqueue_script( 'ajax_submission', EDD_RESEND_RECEIPT_URL . '/assets/js/ajax_req' . $suffix . '.js', array( 'jquery' ), EDD_RESEND_RECEIPT_VER, true );
 
 	// localize JS strings
 	$js_translations = array(
@@ -49,4 +49,3 @@ function edd_resend_receipt_scripts( $hook ) {
 	wp_localize_script( 'ajax_submission', 'eddrr_string_vars', $js_translations );
 }
 add_action( 'wp_enqueue_scripts', 'edd_resend_receipt_scripts' );
-
