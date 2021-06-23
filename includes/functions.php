@@ -200,7 +200,14 @@ function edd_resend_receipt_on_post(){
 function edd_resend_receipt_payment_id( $payment_id ){
 
 	$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
-	$meta = get_post_meta( $payment_id, '_edd_payment_meta', true );
+
+	$payment = edd_get_payment( $payment_id );
+
+	if ( ! $payment ) {
+		return $output;
+	}
+
+	$meta = $payment->get_meta( '_edd_payment_meta' );
 
 	if ( isset( $meta ) && is_array( $meta ) && ! empty( $meta['key'] ) ) {
 		$output = edd_resend_receipt_again( $payment_id );
@@ -264,10 +271,19 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 		$disabled[] = $e_download->ID; // Make an array of disabled downloads
 	}
 
-	$meta = get_post_meta( $payment_id, '_edd_payment_meta', true );
 	$download_ids = array();
-	foreach ( $meta['downloads'] as $current_download ) {
-		$download_ids[] = $current_download['id']; // Make an array of current payment's download items ids
+
+	$payment = edd_get_payment( $payment_id );
+	if ( $payment ) {
+		$meta = $payment->get_meta( '_edd_payment_meta' );
+
+		if ( is_array( $meta ) && isset( $meta['downloads'] ) && is_array( $meta['downloads'] ) ) {
+			foreach ( $meta['downloads'] as $current_download ) {
+				if ( isset( $current_download['id'] ) && ! empty( $current_download['id'] ) ) {
+					$download_ids[] = $current_download['id']; // Make an array of current payment's download items ids
+				}
+			}
+		}
 	}
 
 	foreach ( $download_ids as $key ) {
