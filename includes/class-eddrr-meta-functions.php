@@ -104,8 +104,9 @@ class EDDRR_Meta_Functions {
 				return;
 		}
 
-		if ( isset( $_POST['eddrr_enabled'] ) ) {
-			$eddrr_enabled = $_POST['eddrr_enabled'];
+		$eddrr_enabled = isset( $_POST['eddrr_enabled'] ) ? sanitize_text_field( wp_unslash( $_POST['eddrr_enabled'] ) ) : null;
+
+		if ( in_array( $eddrr_enabled, array( 0, 1 ) ) ) {
 			update_post_meta( $post_id, 'eddrr_enabled', $eddrr_enabled );
 		} else {
 			delete_post_meta( $post_id, 'eddrr_enabled' );
