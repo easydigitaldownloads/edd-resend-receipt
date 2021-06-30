@@ -102,7 +102,7 @@ if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
 
             // Handle EDD licensing
             if ( class_exists( 'EDD_License' ) ) {
-				$license = new EDD_License( __FILE__, 'Resend Receipt', EDD_RESEND_RECEIPT_VER, 'DevriX' );
+				$license = new EDD_License( __FILE__, 'Resend Receipt', EDD_RESEND_RECEIPT_VER, 'DevriX', null, null, 930482 );
             }
 
             if ( class_exists( 'EDDRR_Meta_Functions' ) ) {
