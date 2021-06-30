@@ -3,9 +3,9 @@
  * Plugin Name:     Easy Digital Downloads - Resend Receipt
  * Plugin URI:      https://easydigitaldownloads.com/downloads/resend-receipt/
  * Description:     Resend Receipt allows your customers to resend their purchase receipts directly from your website without logging into their account.
- * Version:         1.0.1
- * Author:          Easy Digital Downloads
- * Author URI:      https://easydigitaldownloads.com
+ * Version:         1.0.2
+ * Author:          Sandhills Development, LLC
+ * Author URI:      https://sandhillsdev.com/
  * Text Domain:     edd-resend-receipt
  * EDD Version:     2.2.4
  *
@@ -58,7 +58,7 @@ if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
          */
         private function setup_constants() {
             // Plugin version
-            define( 'EDD_RESEND_RECEIPT_VER', '1.0.1' );
+            define( 'EDD_RESEND_RECEIPT_VER', '1.0.2' );
 
             // Plugin path
             define( 'EDD_RESEND_RECEIPT_DIR', plugin_dir_path( __FILE__ ) );
@@ -102,7 +102,7 @@ if ( ! class_exists( 'EDD_Resend_Receipt' ) ) {
 
             // Handle EDD licensing
             if ( class_exists( 'EDD_License' ) ) {
-				$license = new EDD_License( __FILE__, 'Resend Receipt', EDD_RESEND_RECEIPT_VER, 'DevriX' );
+				$license = new EDD_License( __FILE__, 'Resend Receipt', EDD_RESEND_RECEIPT_VER, 'Sandhills Development, LLC', null, null, 930482 );
             }
 
             if ( class_exists( 'EDDRR_Meta_Functions' ) ) {

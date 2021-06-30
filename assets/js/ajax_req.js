@@ -5,7 +5,7 @@ jQuery(document).ready(function($) {
         var edd_rr_nonce = $("#edd_rr_nonce").val();
         var edd_resend_value = $('#edd_resend_value').val();
         var edd_resend_exclude = $('#edd_resend_exclude').val();
-        var ajaxurl = $('#edd_resend_ajax').val();
+        var ajaxurl = eddrr_string_vars.ajax_url;
         if(edd_resend_value == '') {
             $('#eddrr_response_div').html('<div class="eddrr-error"><p>' + eddrr_string_vars.enter_value + '</p></div>');
         } else {

@@ -93,16 +93,16 @@ function edd_resend_receipt_form( $atts = false ) {
 		}
 	}
 
+	ob_start();
+
 	/*************************** Starts html form ************************************/ ?>
 
 	<div class="edd-resend-div <?php echo $class; ?>">
 		<?php
-		ob_start();
 		echo '<form action="'.$_SERVER['REQUEST_URI'].'" method="post" id="eddrr-form">';
 		// WordPress nonce field for security purpose
 		wp_nonce_field( 'edd_rr_action', 'edd_rr_nonce' );
 
-		echo '<input name="edd_resend_ajax" id="edd_resend_ajax" type="hidden" value="'.home_url().'/wp-admin/admin-ajax.php"/>';
 		echo '<select name="edd_resend_key" id="edd_resend_key" class="eddrr-form eddrr-form-key">';
 		echo '<option value="purchase_key">' . __( 'Purchase Key', 'edd-resend-receipt' ) . '</option>';
 		echo '<option value="payment_id">' . __( 'Payment ID', 'edd-resend-receipt' ) . '</option>';
@@ -156,8 +156,8 @@ function edd_resend_receipt_on_post(){
 	} else if ( isset( $_POST['edd_resend_value'] ) && isset( $_POST['edd_resend_key'] ) ) {
 
 		if ( ! isset( $_COOKIE['edd_resend_last_query'] ) ) {
-			$edd_resend_value = $_POST['edd_resend_value'];
-			$edd_resend_key = $_POST['edd_resend_key'];
+			$edd_resend_value = sanitize_text_field( wp_unslash( $_POST['edd_resend_value'] ) );
+			$edd_resend_key = sanitize_text_field( wp_unslash( $_POST['edd_resend_key'] ) );
 
 			switch ( $edd_resend_key ) {
 				case 'purchase_key':
@@ -200,7 +200,14 @@ function edd_resend_receipt_on_post(){
 function edd_resend_receipt_payment_id( $payment_id ){
 
 	$output = edd_resend_receipt_language( 'no_purchase_found', 'error' );
-	$meta = get_post_meta( $payment_id, '_edd_payment_meta', true );
+
+	$payment = edd_get_payment( $payment_id );
+
+	if ( ! $payment ) {
+		return $output;
+	}
+
+	$meta = $payment->get_meta( '_edd_payment_meta' );
 
 	if ( isset( $meta ) && is_array( $meta ) && ! empty( $meta['key'] ) ) {
 		$output = edd_resend_receipt_again( $payment_id );
@@ -264,10 +271,19 @@ function edd_resend_receipt_download_enabled( $payment_id ) {
 		$disabled[] = $e_download->ID; // Make an array of disabled downloads
 	}
 
-	$meta = get_post_meta( $payment_id, '_edd_payment_meta', true );
 	$download_ids = array();
-	foreach ( $meta['downloads'] as $current_download ) {
-		$download_ids[] = $current_download['id']; // Make an array of current payment's download items ids
+
+	$payment = edd_get_payment( $payment_id );
+	if ( $payment ) {
+		$meta = $payment->get_meta( '_edd_payment_meta' );
+
+		if ( is_array( $meta ) && isset( $meta['downloads'] ) && is_array( $meta['downloads'] ) ) {
+			foreach ( $meta['downloads'] as $current_download ) {
+				if ( isset( $current_download['id'] ) && ! empty( $current_download['id'] ) ) {
+					$download_ids[] = $current_download['id']; // Make an array of current payment's download items ids
+				}
+			}
+		}
 	}
 
 	foreach ( $download_ids as $key ) {
